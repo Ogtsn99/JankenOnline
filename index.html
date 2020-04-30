@@ -56,13 +56,13 @@ href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
                   console.log("baba");
                   var Connection = isConnected.value;
                   if(Connection){
-                    socket.emit("client_to_server_broadcast", {value : entryMessage});
+                    socket.emit("entryMessage_broadcast", {value : entryMessage});
                     appendMsg(name + "として入室しました");
                     changeLabel();
                     e.preventDefault();
                   }else{
                     console.log('ウゲー');
-                    appendMsg("入室できませんでした。");
+                    appendMsg("すでに二人入っているようです。入室できませんでした。");
                   }
                   e.preventDefault();
                 });

@@ -35,9 +35,9 @@ io.sockets.on('connection', function(socket) {
             socket.emit("isConnected", {value: ok});
             console.log(name + "さん接続できたよ!");
             memberName[id] = name;
+            count[room]++;
             te[id] = -1;
             console.log(room, typeof(room));
-            count[room]++;
             member[room][sz] = id;
         }else{
             var ok = false;
@@ -70,8 +70,13 @@ io.sockets.on('connection', function(socket) {
             }
         }
     });
-    socket.on('client_to_server_broadcast', (data) => {
+    socket.on('entryMessage_broadcast', (data) => {
         socket.broadcast.to(room).emit("message_to_client", {value : data.value} );
+        if(count[room] == 2){
+            io.sockets.in(room).emit('message_to_client', {value: memberName[member[room][0]] + "VS" + memberName[member[room][1]] +"で対戦を開始します!"});
+//            io.to(member[room][1]).emit('message_to_client', {value: memberName[member[room][0]] + "VS" + memberName[member[room][1]] +"で対戦を開始します!"});
+//            io.to(member[room][0]).emit('message_to_client', {value: memberName[member[room][0]] + "VS" + memberName[member[room][1]] +"で対戦を開始します!"});
+        }
     })
     socket.on('disconnect', ()=>{
         socket.broadcast.to(room).emit("message_to_client", {value : name + "さんが退出しました"});
