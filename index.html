@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <title>Janken Online</title>
+  <link rel="stylesheet"
+href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script type="text/javascript" src="/socket.io/socket.io.js"></script>
+</head>
+<body>
+  <div class="container">
+    <h1>WebSocket-Chat</h1>
+      <form class="form-inline">
+        <div class="form-group">
+          <label class="roomLabel" for="rooms">部屋：</label>
+                <select class="form-control" id="rooms">
+                  <option value="room01">部屋01</option>
+                  <option value="room02">部屋02</option>
+                </select>
+            <label class="nameLabel" for="msgForm">名前：</label>
+          <input type="text" class="form-control" id="msgForm">
+        </div>
+          <button type="submit" class="btn btn-primary">入室</button>
+      </form>
+      <div id="chatLogs"></div>
+  </div>
+    
+    <script type="text/javascript">
+        var socket = io.connect();
+        var isEnter = false;
+        var name = '';
+
+        $("form").submit(function(e){
+            var janken = $("#msgForm").val();
+            var message = $("#msgForm").val();
+            var selectRoom = $("#rooms").val();
+            $("#msgForm").val('');
+            e.preventDefault();
+            console.log(name);
+            if (isEnter){
+                if(janken == 0 || janken == 1 || janken == 2){
+                    socket.emit("janken_to_server", {value : {janken, name}});
+                }else {
+                    appendMsg("0 か 1か 2にしてくれ");
+                }
+                e.preventDefault();
+            } else {
+                name = message;
+                var entryMessage = name + "さんが入室しました。";
+                //サーバーに接続していいか聞いてみる
+                //room番号とnameを渡す
+                socket.emit("client_to_server_join", {value : {selectRoom, name}});
+                //接続できたかが帰ってくる
+                socket.on('isConnected', (isConnected)=>{
+                  console.log("baba");
+                  var Connection = isConnected.value;
+                  if(Connection){
+                    socket.emit("client_to_server_broadcast", {value : entryMessage});
+                    appendMsg(name + "として入室しました");
+                    changeLabel();
+                    e.preventDefault();
+                  }else{
+                    console.log('ウゲー');
+                    appendMsg("入室できませんでした。");
+                  }
+                  e.preventDefault();
+                });
+                
+            }
+            e.preventDefault();
+        });
+        socket.on('message_to_client', (message)=>{
+            appendMsg(message.value);
+        })
+        function appendMsg(message) {
+            $("#chatLogs").append("<div>" + message + "</div>");
+        }
+        function changeLabel() {
+            $("label").text("メッセージ：");
+            $("button").text("送信");
+            $("#rooms").prop("disabled", true);
+            $("button").text("送信");
+            isEnter = true;
+        }
+    </script>
+</body>
+</html>
