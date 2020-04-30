@@ -1,8 +1,11 @@
 {
-    "name": "jankenonline",
-    "description": "janken wo online de!",
-    "version": "1.0.0",
-    "engines": {
-      "node": "10.10.x"
-    }
+  "name": "jankenonline",
+  "description": "janken wo online de!",
+  "version": "1.0.0",
+  "engines": {
+    "node": "10.10.x"
+  },
+  "dependencies": {
+    "socket.io": "^2.3.0"
   }
+}
