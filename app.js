@@ -2,10 +2,11 @@
 var http = require('http');
 var socketio = require('socket.io');
 var fs = require('fs');
+const port = process.env.PORT || 8000;
 var server = http.createServer(function(req, res) {
     res.writeHead(200, {'Content-Type' : 'text/html'});
     res.end(fs.readFileSync(__dirname + '/index.html', 'utf-8'));
-}).listen(3000);  // ポート競合の場合は値を変更
+}).listen(port);  // ポート競合の場合は値を変更
 
 var io = socketio.listen(server);
 var te = {};

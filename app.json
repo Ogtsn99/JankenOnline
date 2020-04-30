@@ -1,0 +1,8 @@
+{
+    "name": "jankenOnline",
+    "description": "ジャンケンオンライン",
+    "repository": "https://github.com/Ogtsn99/JankenOnline",
+    "logo": "",
+    "keywords": ["node"],
+    "image": "heroku/nodejs"
+  }
