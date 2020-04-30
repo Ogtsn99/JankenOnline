@@ -11,9 +11,9 @@ href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 <body>
   <div class="container">
     <h1>Janken Online</h1>
+    <p>0->グー, 1->チョキ, 2->パー</p>
       <form class="form-inline">
         <div class="form-group">
-          <label class="roomLabel" for="rooms">部屋：</label>
                 <select class="form-control" id="rooms">
                   <option value="room01">部屋01</option>
                   <option value="room02">部屋02</option>
@@ -77,10 +77,9 @@ href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
             $("#chatLogs").append("<div>" + message + "</div>");
         }
         function changeLabel() {
-            $("label").text("メッセージ：");
+            $("label").text("じゃんけん");
             $("button").text("送信");
             $("#rooms").prop("disabled", true);
-            $("button").text("送信");
             isEnter = true;
         }
     </script>
