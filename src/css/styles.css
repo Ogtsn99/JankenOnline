@@ -1,0 +1,28 @@
+html{
+    font-size: 12px;
+}
+
+a{
+    text-decoration: none;
+}
+
+header{
+    padding: 1.0rem;
+    height: 100px;
+    width: 100%;
+    top: 0;
+    left: 0;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.5);
+}
+
+.container{
+    text-align: center;
+    align-items: center;
+    padding: 5rem;
+}
+
+footer {
+    align-items: center;
+    text-align: center;
+    padding: 1.5rem;
+}

@@ -3,28 +3,41 @@
 <head>
   <meta charset="utf-8">
   <title>Janken Online</title>
-  <link rel="stylesheet"
-href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="オンラインでじゃんけんをするサイトです。のんびり開発中" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <link rel="stylesheet" href="./src/css/styles.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
   <script type="text/javascript" src="/socket.io/socket.io.js"></script>
+  <!--OGPタグ、ファビコンなどは後々実装。-->
 </head>
 <body>
-  <div class="container">
+  <header>
     <h1>Janken Online</h1>
-    <p>0->グー, 1->チョキ, 2->パー</p>
-      <form class="form-inline">
-        <div class="form-group">
-                <select class="form-control" id="rooms">
-                  <option value="room01">部屋01</option>
-                  <option value="room02">部屋02</option>
-                </select>
-            <label class="nameLabel" for="msgForm">名前：</label>
-          <input type="text" class="form-control" id="msgForm">
-        </div>
-          <button type="submit" class="btn btn-primary">入室</button>
-      </form>
-      <div id="chatLogs"></div>
-  </div>
+  </header>
+  <main>
+    <div class="container">
+      <p>0->グー, 1->チョキ, 2->パー</p>
+        <form class="form-inline">
+          <div class="form-group">
+                  <select class="form-control" id="rooms">
+                    <option value="room01">部屋01</option>
+                    <option value="room02">部屋02</option>
+                  </select>
+              <label class="nameLabel" for="msgForm">名前：</label>
+            <input type="text" class="form-control" id="msgForm">
+          </div>
+            <button type="submit" class="btn btn-primary">入室</button>
+        </form>
+        <div id="chatLogs"></div>
+    </div>
+  </main>
+  <footer>
+    <div class="copyright">
+      <p>© Copyright 2020 All rights reserved</p>
+    </div>
+  </footer>
     
     <script type="text/javascript">
         var socket = io.connect();
