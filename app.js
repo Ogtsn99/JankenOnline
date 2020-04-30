@@ -52,7 +52,6 @@ io.sockets.on('connection', function(socket) {
         if(count[room] === 2){
             if(te[member[room][0]] != -1 && te[member[room][1]] != -1){
                 console.log("ジャンケン可能")
-                //ジャンケンをする, 手を
                 var te0 = parseInt(te[member[room][0]]), te1 = parseInt(te[member[room][1]]);
                 if( te0 === te1){
                     io.sockets.in(room).emit("message_to_client", {value:"引き分け!相手も"+numToJanken[te0]+"を出しました!"});
@@ -74,12 +73,10 @@ io.sockets.on('connection', function(socket) {
         socket.broadcast.to(room).emit("message_to_client", {value : data.value} );
         if(count[room] == 2){
             io.sockets.in(room).emit('message_to_client', {value: memberName[member[room][0]] + "VS" + memberName[member[room][1]] +"で対戦を開始します!"});
-//            io.to(member[room][1]).emit('message_to_client', {value: memberName[member[room][0]] + "VS" + memberName[member[room][1]] +"で対戦を開始します!"});
-//            io.to(member[room][0]).emit('message_to_client', {value: memberName[member[room][0]] + "VS" + memberName[member[room][1]] +"で対戦を開始します!"});
         }
     })
     socket.on('disconnect', ()=>{
-        socket.broadcast.to(room).emit("message_to_client", {value : name + "さんが退出しました"});
+        io.sockets.in(room).emit("message_to_client", {value:"引き分け!相手も"+numToJanken[te0]+"を出しました!"});
         te[id] = -1;
         count[room]--;
     })

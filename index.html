@@ -48,14 +48,17 @@
             var janken = $("#msgForm").val();
             var message = $("#msgForm").val();
             var selectRoom = $("#rooms").val();
+            
             $("#msgForm").val('');
             e.preventDefault();
             console.log(name);
-            if (isEnter){
+            if(janken === ''){
+                appendMsg("入力が空です");
+            }else if (isEnter){
                 if(janken == 0 || janken == 1 || janken == 2){
                     socket.emit("janken_to_server", {value : {janken, name}});
                 }else {
-                    appendMsg("0 か 1か 2にしてくれ");
+                    appendMsg("0か1か2でお願いします");
                 }
                 e.preventDefault();
             } else {
@@ -79,7 +82,6 @@
                   }
                   e.preventDefault();
                 });
-                
             }
             e.preventDefault();
         });
