@@ -9,6 +9,10 @@ var server = http.createServer(function(req, res) {
 }).listen(port);  // ポート競合の場合は値を変更
 
 var io = socketio.listen(server);
+io.configure(function () { 
+    io.set("transports", ["xhr-polling"]); 
+    io.set("polling duration", 10); 
+  });
 var te = {};
 var numToJanken = {0: "グー", 1: "チョキ", 2: "パー"};
 var count = {};
