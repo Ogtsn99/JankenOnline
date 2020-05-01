@@ -18,7 +18,6 @@
   </header>
   <main>
     <div class="container">
-      <p>0->グー, 1->チョキ, 2->パー</p>
         <form class="form-inline">
           <div class="form-group">
                   <select class="form-control" id="rooms">
@@ -30,6 +29,9 @@
           </div>
             <button type="submit" class="btn btn-primary">入室</button>
         </form>
+        <input type="button" value="グー" onclick="OnButtonClick(0);"/>
+        <input type="button" value="チョキ" onclick="OnButtonClick(1);"/>
+        <input type="button" value="パー" onclick="OnButtonClick(2);"/>
         <div id="chatLogs"></div>
     </div>
   </main>
@@ -43,7 +45,7 @@
         var socket = io.connect();
         var isEnter = false;
         var name = '';
-
+        
         $("form").submit(function(e){
             var janken = $("#msgForm").val();
             var message = $("#msgForm").val();
@@ -55,11 +57,8 @@
             if(janken === ''){
                 appendMsg("入力が空です");
             }else if (isEnter){
-                if(janken == 0 || janken == 1 || janken == 2){
-                    socket.emit("janken_to_server", {value : {janken, name}});
-                }else {
-                    appendMsg("0か1か2でお願いします");
-                }
+                console.log("send message" + message);
+                socket.emit("chatMessage", {value : '[' +name + ']' + message});
                 e.preventDefault();
             } else {
                 name = message;
@@ -69,7 +68,7 @@
                 socket.emit("client_to_server_join", {value : {selectRoom, name}});
                 //接続できたかが帰ってくる
                 socket.on('isConnected', (isConnected)=>{
-                  console.log("baba");
+                  console.log("接続できました!");
                   var Connection = isConnected.value;
                   if(Connection){
                     socket.emit("entryMessage_broadcast", {value : entryMessage});
@@ -85,14 +84,18 @@
             }
             e.preventDefault();
         });
+        function OnButtonClick(janken){
+          if(name === '') appendMsg("先に名前を登録してください");
+          else socket.emit("janken_to_server", {value : {janken, name}});
+        }
         socket.on('message_to_client', (message)=>{
             appendMsg(message.value);
-        })
+        });
         function appendMsg(message) {
             $("#chatLogs").append("<div>" + message + "</div>");
         }
         function changeLabel() {
-            $("label").text("じゃんけん");
+            $("label").text("メッセージ");
             $("button").text("送信");
             $("#rooms").prop("disabled", true);
             isEnter = true;

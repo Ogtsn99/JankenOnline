@@ -44,6 +44,10 @@ io.sockets.on('connection', function(socket) {
             socket.emit("isConnected", {value: ok});
         } 
     });
+    socket.on("chatMessage", (data)=>{
+        console.log("received a message" + data.value);
+        io.sockets.in(room).emit("message_to_client", {value: data.value});
+    });
     socket.on("janken_to_server", (data) => {
         var janken = data.value.janken;
         te[id] = janken;
@@ -76,7 +80,7 @@ io.sockets.on('connection', function(socket) {
         }
     })
     socket.on('disconnect', ()=>{
-        io.sockets.in(room).emit("message_to_client", {value:"引き分け!相手も"+numToJanken[te0]+"を出しました!"});
+        io.sockets.in(room).emit("message_to_client", {value:"対戦相手が退出しました"});
         te[id] = -1;
         count[room]--;
     })
