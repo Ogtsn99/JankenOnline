@@ -32,7 +32,7 @@
         <input type="button" value="グー" onclick="OnButtonClick(0);"/>
         <input type="button" value="チョキ" onclick="OnButtonClick(1);"/>
         <input type="button" value="パー" onclick="OnButtonClick(2);"/>
-        <div style="margin:0px;padding:0px;" align="center">
+        <div style="margin:0px;padding:0px;">
           <div style="margin:0px;padding:0px;line-height:1.3;">
           <div style="margin:0px;padding:10px;line-height:1.3;overflow:auto;text-align:left;height:200px;" id="chatLogs">
         </div></div></div>
@@ -96,6 +96,7 @@
         });
         function appendMsg(message) {
             $("#chatLogs").append("<div>" + message + "</div>");
+            $('#chatLogs').animate({scrollTop: $('#chatLogs')[0].scrollHeight}, 'fast');
         }
         function changeLabel() {
             $("label").text("メッセージ");
