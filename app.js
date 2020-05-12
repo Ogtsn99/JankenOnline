@@ -59,12 +59,17 @@ io.sockets.on('connection', function(socket) {
                 var te0 = parseInt(te[member[room][0]]), te1 = parseInt(te[member[room][1]]);
                 if( te0 === te1){
                     io.sockets.in(room).emit("message_to_client", {value:"引き分け!相手も"+numToJanken[te0]+"を出しました!"});
+                    io.sockets.in(room).emit("result", {res:0});
                 }else if((te0+1)%3 === te1){//te0がかつ
                     io.to(member[room][0]).emit('message_to_client', {value: "勝利!相手は"+numToJanken[te1]+"を出しました"});
+                    io.to(member[room][0]).emit('result', {res: 1});
                     io.to(member[room][1]).emit('message_to_client', {value: "残念!相手は"+numToJanken[te0]+"を出しました"});
+                    io.to(member[room][1]).emit('result', {res: -1});
                 }else{
                     io.to(member[room][1]).emit('message_to_client', {value: "勝利!相手は"+numToJanken[te0]+"を出しました"});
+                    io.to(member[room][1]).emit('result', {res: 1});
                     io.to(member[room][0]).emit('message_to_client', {value: "残念!相手は"+numToJanken[te1]+"を出しました"});
+                    io.to(member[room][0]).emit('result', {res: -1});
                 }
                 te[member[room][0]] = -1;
                 te[member[room][1]] = -1;
